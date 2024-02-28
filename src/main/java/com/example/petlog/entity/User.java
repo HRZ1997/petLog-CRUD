@@ -1,12 +1,7 @@
 package com.example.petlog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -16,7 +11,7 @@ import java.util.UUID;
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "user_id")
     private @Getter @Setter String id;
 
     @Column(name = "user_name")

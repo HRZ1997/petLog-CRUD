@@ -1,12 +1,10 @@
 package com.example.petlog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
+import java.sql.Date;
 
 @Entity
 @Table(name = "pets")
@@ -17,18 +15,19 @@ public class Pet {
 
     @Id
     @Column(name = "pet_id")
-    private @Getter @Setter String pet_id;
+    private @Getter @Setter String petId;
 
     @Column(name = "name")
     private @Getter @Setter String name;
 
-    @Column(name = "breed")
-    private @Getter @Setter String breed;
+    @Column(name = "breed_id")
+    private @Getter @Setter String breedId;
 
     @Column(name = "dob")
-    private @Getter @Setter String dateOfBirth;
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    private @Getter @Setter Date dateOfBirth;
 
     @Column(name = "owner_id")
-    private @Getter @Setter UUID owner_id;
+    private @Getter @Setter String ownerId;
 
 }
