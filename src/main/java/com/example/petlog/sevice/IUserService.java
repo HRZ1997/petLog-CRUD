@@ -14,4 +14,8 @@ public interface IUserService {
 
     void deleteById(String theId);
 
+    boolean verify(String username, String password);
+
+    User findByUsername(String username);
+
 }

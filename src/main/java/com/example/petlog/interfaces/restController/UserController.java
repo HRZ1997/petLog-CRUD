@@ -1,8 +1,7 @@
-package com.example.petlog.rest;
+package com.example.petlog.interfaces.restController;
 
 import com.example.petlog.entity.User;
-import com.example.petlog.entity.User;
-import com.example.petlog.sevice.UserServiceImpl;
+import com.example.petlog.sevice.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +9,13 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl theUserService) { this.userService = theUserService; }
+    public UserController(UserService theUserService) { this.userService = theUserService; }
 
     @PostMapping("/users")
     public User addUser(@RequestBody User theUser) {
@@ -42,6 +40,18 @@ public class UserController {
 
         if (theUser == null) {
             throw new RuntimeException("User id not found - " + userId);
+        }
+
+        return theUser;
+    }
+
+    @GetMapping("/users/username/{username}")
+    public User getUserByUsername(@PathVariable String username) {
+
+        User theUser = userService.findByUsername(username);
+
+        if (theUser == null) {
+            throw new RuntimeException("User id not found - " + username);
         }
 
         return theUser;

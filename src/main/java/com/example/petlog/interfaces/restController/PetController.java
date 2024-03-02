@@ -1,7 +1,7 @@
-package com.example.petlog.rest;
+package com.example.petlog.interfaces.restController;
 
 import com.example.petlog.entity.Pet;
-import com.example.petlog.sevice.PetServiceImpl;
+import com.example.petlog.sevice.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,10 +11,10 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api")
 public class PetController {
-    private PetServiceImpl petService;
+    private PetService petService;
 
     @Autowired
-    public PetController(PetServiceImpl thePetService) { this.petService = thePetService; }
+    public PetController(PetService thePetService) { this.petService = thePetService; }
 
     @PostMapping("/pet")
     public Pet addPet(@RequestBody Pet thePet) {

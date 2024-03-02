@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PetServiceImpl implements IPetService {
+public class PetService implements IPetService {
 
     private PetRepository petRepository;
     @Autowired
-    public PetServiceImpl(PetRepository thePetRepository) { this.petRepository = thePetRepository; }
+    public PetService(PetRepository thePetRepository) { this.petRepository = thePetRepository; }
 
     @Override
     public Pet save(Pet thePet) {
