@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api")
 public class PetController {
     private PetService petService;
 
@@ -19,7 +18,6 @@ public class PetController {
     @PostMapping("/pet")
     public Pet addPet(@RequestBody Pet thePet) {
 
-        thePet.setPetId(UUID.randomUUID().toString());
 
         Pet dbPet = petService.save(thePet);
 
@@ -33,7 +31,7 @@ public class PetController {
     }
 
     @GetMapping("/pets/{petId}")
-    public Pet getPet(@PathVariable String petId) {
+    public Pet getPet(@PathVariable Long petId) {
 
         Pet thePet = petService.findById(petId);
 
@@ -55,7 +53,7 @@ public class PetController {
     // add mapping for DELETE /pets/{petId} - delete pet
 
     @DeleteMapping("/pets/{petId}")
-    public String deletePet(@PathVariable String petId) {
+    public String deletePet(@PathVariable Long petId) {
 
         Pet tempPet = petService.findById(petId);
 

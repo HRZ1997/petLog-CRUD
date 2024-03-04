@@ -1,9 +1,11 @@
 package com.example.petlog.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
+import java.util.Collection;
+
 
 @Entity
 @Table(name = "users")
@@ -13,28 +15,28 @@ import java.util.Date;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private @Getter @Setter String id;
+    private @Getter @Setter Long userId;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     private @Getter @Setter String username;
 
     @Column(name = "password")
     private @Getter @Setter String password;
 
-    @Column(name = "first_name")
-    private @Getter @Setter String firstName;
+    @Column(name = "enabled")
+    private @Getter @Setter boolean enabled;
 
-    @Column(name = "last_name")
-    private @Getter @Setter String lastName;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private @Getter @Setter Collection<Role> roles;
 
-    @Column(name = "email")
-    private @Getter @Setter String email;
-
-    @Column(name = "phone")
-    private @Getter @Setter String phone;
-
-    @Column(name = "birthday")
-    private @Getter @Setter Date birthday;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonBackReference
+    private @Getter @Setter UserInfo userInfo;
 
 }

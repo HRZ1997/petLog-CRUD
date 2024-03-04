@@ -1,10 +1,14 @@
 package com.example.petlog.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "pets")
@@ -15,19 +19,24 @@ public class Pet {
 
     @Id
     @Column(name = "pet_id")
-    private @Getter @Setter String petId;
+    private @Getter @Setter Long petId;
 
     @Column(name = "name")
     private @Getter @Setter String name;
 
-    @Column(name = "breed_id")
-    private @Getter @Setter String breedId;
-
     @Column(name = "dob")
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
     private @Getter @Setter Date dateOfBirth;
 
-    @Column(name = "owner_id")
-    private @Getter @Setter String ownerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "breed_id")
+    private @Getter @Setter Breed breed;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    @JsonBackReference
+    private @Getter @Setter UserInfo owner;
+
+    @ManyToMany(mappedBy = "pets")
+    private @Getter @Setter Collection<Log> logs;
 
 }

@@ -1,10 +1,9 @@
 package com.example.petlog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Collection;
 
 @Entity
 @Table(name = "tags")
@@ -15,9 +14,12 @@ public class Tag {
 
     @Id
     @Column(name = "tag_id")
-    private @Getter
-    @Setter String tagId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Getter @Setter Integer tagId;
 
-    @Column(name = "log_id")
-    private @Getter @Setter String logId;
+    @Column(name = "tag_content")
+    private @Getter @Setter String tagContent;
+
+    @ManyToMany(mappedBy = "tags")
+    private @Getter @Setter Collection<Log> logs;
 }

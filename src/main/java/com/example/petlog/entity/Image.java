@@ -1,9 +1,6 @@
 package com.example.petlog.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -15,12 +12,13 @@ public class Image {
 
     @Id
     @Column(name = "image_id")
-    private @Getter @Setter String imageId;
-
-    @Column(name = "log_id")
-    private @Getter @Setter String logId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private @Getter @Setter Long imageId;
 
     @Column(name = "image_url")
     private @Getter @Setter String imageUrl;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "log_id")
+    private Log log;
 }

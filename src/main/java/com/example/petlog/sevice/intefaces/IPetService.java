@@ -1,7 +1,6 @@
-package com.example.petlog.sevice;
+package com.example.petlog.sevice.intefaces;
 
 import com.example.petlog.entity.Pet;
-import com.example.petlog.entity.User;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ public interface IPetService {
 
     List<Pet> findAll();
 
-    Pet findById(String theId);
+    Pet findById(Long theId);
 
-    void deleteById(String theId);
+    void deleteById(Long theId);
 }

@@ -2,6 +2,7 @@ package com.example.petlog.sevice;
 
 import com.example.petlog.entity.Pet;
 import com.example.petlog.repository.PetRepository;
+import com.example.petlog.sevice.intefaces.IPetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class PetService implements IPetService {
     }
 
     @Override
-    public Pet findById(String theId) {
+    public Pet findById(Long theId) {
         Optional<Pet> result = petRepository.findById(theId);
 
         Pet thePet = null;
@@ -43,7 +44,7 @@ public class PetService implements IPetService {
         return thePet;
     }
     @Override
-    public void deleteById(String theId) {
+    public void deleteById(Long theId) {
 
         petRepository.deleteById(theId);
 
