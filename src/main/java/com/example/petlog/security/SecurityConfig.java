@@ -6,11 +6,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+@EnableWebSecurity
+public class SecurityConfig{
 
     //beans
     //bcrypt bean definition
@@ -30,20 +32,28 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(configurer ->
+        http
+                .cors().and() // Enable CORS with default configuration from CorsFilter
+                .csrf().disable()
+                .authorizeHttpRequests(configurer ->
                 configurer
+                        .requestMatchers(HttpMethod.POST, "/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/users").hasRole("USER")
                         .requestMatchers(HttpMethod.GET, "/users/**").hasRole("USER")
-                        .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/users").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN"));
+                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN"))
+                .formLogin(form -> form
+                        .loginPage("/login") // Custom login page (optional)
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/home", true)
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .permitAll() // Allow everyone to logout
+                        .logoutSuccessUrl("/login")); // Redirect to login page on logout
 
         // use HTTP Basic authentication
         http.httpBasic();
-
-        // disable Cross Site Request Forgery (CSRF)
-        // in general not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
-        http.csrf().disable();
 
         return http.build();
     }

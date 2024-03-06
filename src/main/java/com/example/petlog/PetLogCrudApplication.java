@@ -33,7 +33,7 @@ public class PetLogCrudApplication {
 
             //saveUser(userRepository, roleRepository);
 
-            getUserAndInfoById(userRepository, 5L);
+            //getUserAndInfoById(userRepository, 5L);
 
             //saveUserInfo(userInfoRepository);
         };

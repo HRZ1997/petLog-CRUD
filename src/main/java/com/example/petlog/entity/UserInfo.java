@@ -1,11 +1,9 @@
 package com.example.petlog.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Collection;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "userInfos")
@@ -38,6 +36,7 @@ public class UserInfo {
     @MapsId
     @JoinColumn(name = "user_id_fk")
     private @Getter @Setter User user;
+
 
     public UserInfo(String firstName, String lastName, String email, String phone) {
         this.firstName = firstName;
