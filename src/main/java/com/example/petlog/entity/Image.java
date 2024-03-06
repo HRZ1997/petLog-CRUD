@@ -18,7 +18,6 @@ public class Image {
     @Column(name = "image_url")
     private @Getter @Setter String imageUrl;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "log_id")
-    private Log log;
+    @Column(name = "log_id")
+    private @Getter @Setter Long logId;
 }

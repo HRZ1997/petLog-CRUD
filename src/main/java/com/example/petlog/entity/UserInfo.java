@@ -1,8 +1,6 @@
 package com.example.petlog.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,11 +11,11 @@ import java.util.Date;
 @Table(name = "userInfos")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class UserInfo {
 
     @Id
     @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Getter @Setter Long userId;
 
     @Column(name = "first_name")
@@ -35,16 +33,28 @@ public class UserInfo {
     @Column(name = "birthday")
     private @Getter @Setter Date birthday;
 
-    @OneToOne(mappedBy = "userInfo")
-    @JsonManagedReference
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @MapsId
+    @JoinColumn(name = "user_id_fk")
     private @Getter @Setter User user;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private @Getter @Setter Collection<Pet> pets;
+    public UserInfo(String firstName, String lastName, String email, String phone) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+    }
 
-    @OneToMany(mappedBy = "userInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
-    private @Getter @Setter Collection<Log> logs;
-
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "userId=" + userId +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
 }

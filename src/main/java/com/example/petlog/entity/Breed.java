@@ -20,7 +20,4 @@ public class Breed {
     @Column(name = "breed_name")
     private @Getter @Setter String breedName;
 
-    @OneToMany(mappedBy = "breed")
-    private @Getter @Setter Collection<Pet> pets;
-
 }

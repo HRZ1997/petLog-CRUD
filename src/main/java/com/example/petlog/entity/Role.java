@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "roles")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Role {
 
     @Id
@@ -23,4 +23,16 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private @Getter @Setter Collection<User> users;
 
+    public Role(Integer roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", roleName='" + roleName + '\'' +
+                '}';
+    }
 }

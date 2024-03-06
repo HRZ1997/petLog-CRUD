@@ -16,7 +16,7 @@ public class UserInfoController {
     @Autowired
     public UserInfoController(UserInfoService theUserInfoService) { this.userInfoService = theUserInfoService; }
 
-    @PostMapping("/users")
+    @PostMapping("/register")
     public UserInfo addUser(@RequestBody UserInfo theUserInfo) {
 
 

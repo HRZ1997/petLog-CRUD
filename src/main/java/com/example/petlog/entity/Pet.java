@@ -27,16 +27,16 @@ public class Pet {
     @Column(name = "dob")
     private @Getter @Setter Date dateOfBirth;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "breed_id")
-    private @Getter @Setter Breed breed;
+    @Column(name = "breed_id")
+    private @Getter @Setter Integer breedId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id")
-    @JsonBackReference
-    private @Getter @Setter UserInfo owner;
+    @Column(name = "owner_id")
+    private @Getter @Setter Long ownerId;
 
-    @ManyToMany(mappedBy = "pets")
-    private @Getter @Setter Collection<Log> logs;
-
+    public Pet(String name, Date dateOfBirth, Integer breedId, Long ownerId) {
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.breedId = breedId;
+        this.ownerId = ownerId;
+    }
 }

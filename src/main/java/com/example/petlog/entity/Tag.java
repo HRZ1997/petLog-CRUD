@@ -8,7 +8,6 @@ import java.util.Collection;
 @Entity
 @Table(name = "tags")
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class Tag {
 
@@ -20,6 +19,7 @@ public class Tag {
     @Column(name = "tag_content")
     private @Getter @Setter String tagContent;
 
-    @ManyToMany(mappedBy = "tags")
-    private @Getter @Setter Collection<Log> logs;
+    public Tag(String tagContent) {
+        this.tagContent = tagContent;
+    }
 }

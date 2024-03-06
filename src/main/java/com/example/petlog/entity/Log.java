@@ -21,10 +21,8 @@ public class Log {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Getter @Setter Long logId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private UserInfo userInfo;
+    @Column(name = "user_id")
+    private @Getter @Setter Long userId;
 
     @Column(name = "created_at")
     private @Getter @Setter Timestamp createdAt;
@@ -38,19 +36,5 @@ public class Log {
     @Column(name = "text")
     private @Getter @Setter String text;
 
-    @OneToMany(mappedBy = "log", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Collection<Image> images;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "tagInLogs",
-            joinColumns = @JoinColumn(name = "log_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private @Getter @Setter Collection<Tag> tags;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "petInLogs",
-            joinColumns = @JoinColumn(name = "log_id"),
-            inverseJoinColumns = @JoinColumn(name = "pet_id"))
-    private @Getter @Setter Collection<Pet> pets;
 
 }
