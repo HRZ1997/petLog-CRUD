@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "userInfos")
@@ -36,6 +38,14 @@ public class UserInfo {
     @MapsId
     @JoinColumn(name = "user_id_fk")
     private @Getter @Setter User user;
+
+    @OneToMany(mappedBy = "owner",
+            cascade = CascadeType.ALL)
+    private @Getter @Setter Collection<Pet> pets;
+
+    @OneToMany(mappedBy = "userInfo",
+    cascade = CascadeType.ALL)
+    private @Getter @Setter List<Log> logs;
 
 
     public UserInfo(String firstName, String lastName, String email, String phone) {

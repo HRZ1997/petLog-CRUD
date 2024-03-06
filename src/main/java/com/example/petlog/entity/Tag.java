@@ -19,6 +19,9 @@ public class Tag {
     @Column(name = "tag_content")
     private @Getter @Setter String tagContent;
 
+    @ManyToMany(mappedBy = "tags")
+    private Collection<Log> logs;
+
     public Tag(String tagContent) {
         this.tagContent = tagContent;
     }

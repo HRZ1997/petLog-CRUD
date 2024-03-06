@@ -1,8 +1,7 @@
 package com.example.petlog;
 
-import com.example.petlog.entity.Role;
-import com.example.petlog.entity.User;
-import com.example.petlog.entity.UserInfo;
+import com.example.petlog.entity.*;
+import com.example.petlog.repository.PetRepository;
 import com.example.petlog.repository.RoleRepository;
 import com.example.petlog.repository.UserInfoRepository;
 import com.example.petlog.repository.UserRepository;
@@ -11,10 +10,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @SpringBootApplication
 public class PetLogCrudApplication {
@@ -31,7 +27,7 @@ public class PetLogCrudApplication {
 
             // findInstructor(appDAO);
 
-            //saveUser(userRepository, roleRepository);
+            saveUser(userRepository);
 
             //getUserAndInfoById(userRepository, 5L);
 
@@ -40,18 +36,19 @@ public class PetLogCrudApplication {
     }
 
 
-    private void saveUser(UserRepository userRepository, RoleRepository roleRepository) {
+    private void saveUser(UserRepository userRepository) {
 
         Long id = 100L;
 
         UserInfo userInfo = new UserInfo("test_ryan", "test_zhang", "test@test.com", "123456789");
+        userInfo.setLogs(new ArrayList<Log>());
+        userInfo.setPets(new HashSet<>());
 
         User user = new User("test_ryan", "test_password", true);
 
         Collection<Role> roles = new HashSet<Role>();
-
-        roles.add(roleRepository.findById(1).get());
-        roles.add(roleRepository.findById(2).get());
+        roles.add(new Role(1,"ROLE_ADMIN"));
+        roles.add(new Role(1,"ROLE_PREMIUM"));
 
         user.setRoles(roles);
 
@@ -61,6 +58,15 @@ public class PetLogCrudApplication {
         userRepository.save(user);
 
         System.out.println("user info saved: " + userInfo.toString());
+
+    }
+
+    private void savePet(PetRepository petRepository, Breed breedRepository) {
+        String breedName = "BERNEDOODLE";
+        Pet pet = new Pet();
+        pet.setName("Noodle");
+        Breed breed = new Breed(1,breedName);
+        pet.setBreed(breed);
 
     }
 

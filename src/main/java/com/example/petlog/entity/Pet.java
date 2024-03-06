@@ -14,7 +14,6 @@ import java.util.Collection;
 @Table(name = "pets")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Pet {
 
     @Id
@@ -27,16 +26,28 @@ public class Pet {
     @Column(name = "dob")
     private @Getter @Setter Date dateOfBirth;
 
-    @Column(name = "breed_id")
-    private @Getter @Setter Integer breedId;
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private UserInfo owner;
 
-    @Column(name = "owner_id")
-    private @Getter @Setter Long ownerId;
+    @ManyToOne
+    @JoinColumn(name = "breed_id")
+    private @Getter @Setter Breed breed;
 
-    public Pet(String name, Date dateOfBirth, Integer breedId, Long ownerId) {
+    @ManyToMany(mappedBy = "pets")
+    private @Getter @Setter Collection<Log> logs;
+
+    public Pet(String name, Date dateOfBirth) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
-        this.breedId = breedId;
-        this.ownerId = ownerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Pet{" +
+                "petId=" + petId +
+                ", name='" + name + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                '}';
     }
 }

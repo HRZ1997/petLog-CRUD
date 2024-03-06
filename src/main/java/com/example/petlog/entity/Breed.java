@@ -9,7 +9,6 @@ import java.util.Collection;
 @Table(name = "breeds")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Breed {
 
     @Id
@@ -19,5 +18,21 @@ public class Breed {
 
     @Column(name = "breed_name")
     private @Getter @Setter String breedName;
+
+    @OneToMany(mappedBy = "breed", cascade = CascadeType.ALL)
+    private Collection<Pet> pets;
+
+    public Breed(Integer breedId, String breedName) {
+        this.breedId = breedId;
+        this.breedName = breedName;
+    }
+
+    @Override
+    public String toString() {
+        return "Breed{" +
+                "breedId=" + breedId +
+                ", breedName='" + breedName + '\'' +
+                '}';
+    }
 
 }

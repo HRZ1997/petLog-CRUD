@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "images")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Image {
 
     @Id
@@ -18,6 +17,20 @@ public class Image {
     @Column(name = "image_url")
     private @Getter @Setter String imageUrl;
 
-    @Column(name = "log_id")
-    private @Getter @Setter Long logId;
+    @ManyToOne
+    @JoinColumn(name = "log_id")
+    private Log log;
+
+    public Image(Long imageId, String imageUrl) {
+        this.imageId = imageId;
+        this.imageUrl = imageUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "imageId=" + imageId +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }
